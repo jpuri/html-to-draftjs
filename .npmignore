@@ -1,0 +1,7 @@
+config
+src
+node_modules
+.babelrc
+.gitignore
+.npmignore
+yarn.lock

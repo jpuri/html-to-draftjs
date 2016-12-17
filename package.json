@@ -1,0 +1,34 @@
+{
+  "name": "html-to-draftjs",
+  "version": "0.0.1",
+  "main": "build/html-to-draftjs.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpuri/html-to-draftjs.git"
+  },
+  "devDependencies": {
+    "babel-preset-stage-0": "^6.16.0",
+    "draft-js": "^0.9.1",
+    "precss": "^1.4.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-scripts": "0.8.3",
+    "rimraf": "^2.5.4",
+    "webpack": "^1.14.0",
+    "chai": "^3.5.0",
+    "draftjs-to-html": "file:../draftjs-to-html",
+    "react-draft-wysiwyg": "^1.4.1"
+  },
+  "peerDependencies": {
+    "draft-js": "^0.9.x",
+    "react": "0.13.x || 0.14.x || 15.x",
+    "react-dom": "0.13.x || 0.14.x || 15.x"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "clean": "rimraf dist",
+    "build": "npm run clean && webpack --config config/webpack.build.js"
+  }
+}
