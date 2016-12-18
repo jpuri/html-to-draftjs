@@ -7,3 +7,7 @@ html, body {
 .root {
   height: 100%;
 }
+.demo-content {
+  height: 200px;
+  width: 500px;
+}

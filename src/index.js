@@ -21,6 +21,7 @@ class Playground extends Component {
       const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
       const outputEditorState = EditorState.createWithContent(contentState);
       this.setState({
+        inputEditorState,
         outputEditorState,
       });
     }
@@ -29,8 +30,19 @@ class Playground extends Component {
   render() {
     return (
       <div>
-        <Editor onEditorStateChange={this.onInputEditorChange} />
-        <Editor editorState={this.state.outputEditorState} />
+        <div style={{ height: 200 }}>
+          <Editor onEditorStateChange={this.onInputEditorChange} />
+        </div>
+        <div style={{ height: 200 }}>
+          <textarea
+            disabled
+            className="demo-content"
+            value={this.state.inputEditorState && draftToHtml(convertToRaw(this.state.inputEditorState.getCurrentContent()))}
+          />
+        </div>
+        <div style={{ height: 200 }}>
+          <Editor editorState={this.state.outputEditorState} />
+        </div>
       </div>
     );
   }

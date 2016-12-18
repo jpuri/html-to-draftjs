@@ -1,17 +1,10 @@
 const inlineTags = {
-  b: 'BOLD',
   code: 'CODE',
   del: 'STRIKETHROUGH',
   em: 'ITALIC',
-  i: 'ITALIC',
-  s: 'STRIKETHROUGH',
-  strike: 'STRIKETHROUGH',
   strong: 'BOLD',
-  u: 'UNDERLINE',
+  ins: 'UNDERLINE',
 };
-
-const boldValues = ['bold', 'bolder', '500', '600', '700', '800', '900'];
-const notBoldValues = ['light', 'lighter', '100', '200', '300', '400'];
 
 export default function processInlineTag(
   tag: string,
@@ -24,34 +17,28 @@ export default function processInlineTag(
     inlineStyle = currentStyle.add(styleToCheck).toOrderedSet();
   } else if (node instanceof HTMLElement) {
     inlineStyle = currentStyle;
-    const htmlElement = node;
+    //const htmlElement = node;
     inlineStyle = inlineStyle.withMutations((style) => {
-      const fontWeight = htmlElement.style.fontWeight;
-      const fontStyle = htmlElement.style.fontStyle;
-      const textDecoration = htmlElement.style.textDecoration;
+      // console.log('style', style)
+      // const color = htmlElement.style.color;
+      // const backgroundColor = htmlElement.style.backgroundColor;
 
-      if (boldValues.indexOf(fontWeight) >= 0) {
-        style.add('BOLD');
-      } else if (notBoldValues.indexOf(fontWeight) >= 0) {
-        style.remove('BOLD');
-      }
-
-      if (fontStyle === 'italic') {
-        style.add('ITALIC');
-      } else if (fontStyle === 'normal') {
-        style.remove('ITALIC');
-      }
-
-      if (textDecoration === 'underline') {
-        style.add('UNDERLINE');
-      }
-      if (textDecoration === 'line-through') {
-        style.add('STRIKETHROUGH');
-      }
-      if (textDecoration === 'none') {
-        style.remove('UNDERLINE');
-        style.remove('STRIKETHROUGH');
-      }
+      // if (fontStyle === 'color') {
+      //   style.add('COLOR');
+      // } else if (fontStyle === 'backgroundColor') {
+      //   style.remove('ITALIC');
+      // }
+      //
+      // if (textDecoration === 'underline') {
+      //   style.add('UNDERLINE');
+      // }
+      // if (textDecoration === 'line-through') {
+      //   style.add('STRIKETHROUGH');
+      // }
+      // if (textDecoration === 'none') {
+      //   style.remove('UNDERLINE');
+      //   style.remove('STRIKETHROUGH');
+      // }
     }).toOrderedSet();
   }
   return inlineStyle;

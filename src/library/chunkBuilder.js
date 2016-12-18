@@ -16,7 +16,7 @@ const getWhitespaceChunk = (inEntity: ?string): Object => {
   };
 };
 
-const createTextChunk = (node: Object): Object => {
+const createTextChunk = (node: Object, inlineStyle: OrderedSet): Object => {
   const text = node.textContent;
   if (text.trim() === '') {
     return { chunk: getWhitespaceChunk() };
@@ -24,7 +24,7 @@ const createTextChunk = (node: Object): Object => {
   return {
     chunk: {
       text,
-      inlines: Array(text.length).fill(new OrderedSet()),
+      inlines: Array(text.length).fill(inlineStyle),
       entities: Array(text.length).fill(null),
       blocks: [],
     },
@@ -52,8 +52,8 @@ const getEmptyChunk = (): Object => {
 const getBlockDividerChunk = (block: Object, depth: number): Object => {
   return {
     text: '\r',
-    inlines: [new OrderedSet()],
-    entities: new Array(1),
+    inlines: [],
+    entities: [],
     blocks: [{
       type: block,
       depth: Math.max(0, Math.min(MAX_DEPTH, depth)),

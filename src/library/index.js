@@ -1,7 +1,7 @@
 /* @flow */
 
 import { CharacterMetadata, ContentBlock, genKey } from 'draft-js';
-import { List, Map } from 'immutable';
+import { List, Map, OrderedSet } from 'immutable';
 import getSafeBodyFromHTML from './getSafeBodyFromHTML';
 import {
   createTextChunk,
@@ -10,26 +10,27 @@ import {
   getBlockDividerChunk,
 } from './chunkBuilder';
 import getBlockTypeForTag from './getBlockTypeForTag';
-import blockRenderMap from './blockRenderMap';
+import processInlineTag from './processInlineTag';
 import joinChunks from './joinChunks';
 
 const SPACE = ' ';
 const REGEX_NBSP = new RegExp('&nbsp;', 'g');
 
 function genFragment(
-  node: Object
+  node: Object,
+  inlineStyle: OrderedSet,
 ): Object {
   const nodeName = node.nodeName.toLowerCase();
 
   if (nodeName === '#text' && node.textContent !== '\n') {
-    return createTextChunk(node);
+    return createTextChunk(node, inlineStyle);
   }
 
   if (nodeName === 'br') {
     return { chunk: getSoftNewlineChunk() };
   }
 
-  const blockType = getBlockTypeForTag(nodeName, undefined, blockRenderMap);
+  const blockType = getBlockTypeForTag(nodeName, undefined);
 
   let chunk;
   if (blockType) {
@@ -38,9 +39,10 @@ function genFragment(
     chunk = getEmptyChunk();
   }
 
+  inlineStyle = processInlineTag(nodeName, node, inlineStyle);
   let child = node.firstChild;
   while (child) {
-    const { chunk: generatedChunk } = genFragment(child);
+    const { chunk: generatedChunk } = genFragment(child, inlineStyle);
     chunk = joinChunks(chunk, generatedChunk);
     const sibling = child.nextSibling;
     child = sibling;
@@ -57,7 +59,7 @@ function getChunkForHTML(html: string): Object {
     return null;
   }
 
-  const { chunk } = genFragment(safeBody);
+  const { chunk } = genFragment(safeBody, new OrderedSet());
 
   return { chunk };
 }
@@ -67,6 +69,7 @@ export default function htmlToDraft(html: string): Object {
   if (chunkData) {
     const { chunk } = chunkData;
 
+    // console.log('chunk', chunk.inlines && chunk.inlines.toString())
     let start = 0;
     return {
       contentBlocks: chunk.text.split('\r')
