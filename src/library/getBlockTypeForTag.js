@@ -1,3 +1,5 @@
+import { Map } from 'immutable';
+
 const blockRenderMap = new Map({
   'header-one': {
     element: 'h1',
@@ -19,9 +21,11 @@ const blockRenderMap = new Map({
   },
   'unordered-list-item': {
     element: 'li',
+    wrapper: 'ul',
   },
   'ordered-list-item': {
     element: 'li',
+    wrapper: 'ol',
   },
   blockquote: {
     element: 'blockquote',
@@ -39,18 +43,15 @@ export default function getBlockTypeForTag(
   lastList: ?string
 ): Object {
   const matchedTypes = blockRenderMap
-    .filter(draftBlock => (
-      draftBlock.element === tag ||
-      draftBlock.wrapper === tag ||
-      (
-        draftBlock.aliasedElements &&
-        draftBlock.aliasedElements.some(alias => alias === tag)
-      )
-    ))
+    .filter(draftBlock => {
+      return (
+      (draftBlock.element === tag &&
+      (!draftBlock.wrapper || draftBlock.wrapper === lastList)) ||
+      draftBlock.wrapper === tag
+    )})
     .keySeq()
     .toSet()
-    .toArray()
-    .sort();
+    .toArray();
 
   if (matchedTypes.length === 1) {
     return matchedTypes[0];

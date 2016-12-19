@@ -17,7 +17,7 @@
     "webpack": "^1.14.0",
     "chai": "^3.5.0",
     "draftjs-to-html": "file:../draftjs-to-html",
-    "react-draft-wysiwyg": "^1.4.1"
+    "react-draft-wysiwyg": "file:../editor-oss"
   },
   "peerDependencies": {
     "draft-js": "^0.9.x",

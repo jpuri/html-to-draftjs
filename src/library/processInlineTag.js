@@ -4,6 +4,8 @@ const inlineTags = {
   em: 'ITALIC',
   strong: 'BOLD',
   ins: 'UNDERLINE',
+  sub: 'SUBSCRIPT',
+  sup: 'SUPERSCRIPT',
 };
 
 export default function processInlineTag(
@@ -17,28 +19,24 @@ export default function processInlineTag(
     inlineStyle = currentStyle.add(styleToCheck).toOrderedSet();
   } else if (node instanceof HTMLElement) {
     inlineStyle = currentStyle;
-    //const htmlElement = node;
+    const htmlElement = node;
     inlineStyle = inlineStyle.withMutations((style) => {
-      // console.log('style', style)
-      // const color = htmlElement.style.color;
-      // const backgroundColor = htmlElement.style.backgroundColor;
-
-      // if (fontStyle === 'color') {
-      //   style.add('COLOR');
-      // } else if (fontStyle === 'backgroundColor') {
-      //   style.remove('ITALIC');
-      // }
-      //
-      // if (textDecoration === 'underline') {
-      //   style.add('UNDERLINE');
-      // }
-      // if (textDecoration === 'line-through') {
-      //   style.add('STRIKETHROUGH');
-      // }
-      // if (textDecoration === 'none') {
-      //   style.remove('UNDERLINE');
-      //   style.remove('STRIKETHROUGH');
-      // }
+      const color = htmlElement.style.color;
+      const backgroundColor = htmlElement.style.backgroundColor;
+      const fontSize = htmlElement.style.fontSize;
+      const fontFamily = htmlElement.style.fontFamily;
+      if (color) {
+        style.add(`color-${color.replace(/ /g, '')}`);
+      }
+      if (backgroundColor) {
+        style.add(`bgcolor-${backgroundColor.replace(/ /g, '')}`);
+      }
+      if (fontSize) {
+        style.add(`fontsize-${fontSize.substr(0, fontSize.length - 2)}`);
+      }
+      if (fontFamily) {
+        style.add(`fontfamily-${fontFamily}`);
+      }
     }).toOrderedSet();
   }
   return inlineStyle;

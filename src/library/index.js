@@ -8,17 +8,22 @@ import {
   getSoftNewlineChunk,
   getEmptyChunk,
   getBlockDividerChunk,
+  getFirstBlockChunk,
+  joinChunks,
 } from './chunkBuilder';
 import getBlockTypeForTag from './getBlockTypeForTag';
 import processInlineTag from './processInlineTag';
-import joinChunks from './joinChunks';
 
 const SPACE = ' ';
 const REGEX_NBSP = new RegExp('&nbsp;', 'g');
 
+let firstBlock = true;
+
 function genFragment(
   node: Object,
   inlineStyle: OrderedSet,
+  depth: number,
+  lastList: string
 ): Object {
   const nodeName = node.nodeName.toLowerCase();
 
@@ -30,20 +35,45 @@ function genFragment(
     return { chunk: getSoftNewlineChunk() };
   }
 
-  const blockType = getBlockTypeForTag(nodeName, undefined);
+  const blockType = getBlockTypeForTag(nodeName, lastList);
 
   let chunk;
   if (blockType) {
-    chunk = getBlockDividerChunk(blockType, 0);
-  } else {
+    if (nodeName === 'ul' || nodeName === 'ol') {
+      lastList = nodeName;
+      depth += 1;
+    } else {
+      if (
+         blockType !== 'unordered-list-item' &&
+         blockType !== 'ordered-list-item'
+       ) {
+         lastList = '';
+         depth = -1;
+       }
+       if (!firstBlock) {
+         chunk = getBlockDividerChunk(blockType, depth);
+       } else {
+         chunk = getFirstBlockChunk(blockType);
+         firstBlock = false;
+       }
+    }
+  }
+  if (!chunk) {
     chunk = getEmptyChunk();
   }
 
   inlineStyle = processInlineTag(nodeName, node, inlineStyle);
+
   let child = node.firstChild;
   while (child) {
-    const { chunk: generatedChunk } = genFragment(child, inlineStyle);
-    chunk = joinChunks(chunk, generatedChunk);
+    const { chunk: generatedChunk } = genFragment(child, inlineStyle, depth, lastList);
+    if (nodeName.toLowerCase() === 'li' &&
+      (child.nodeName.toLowerCase() === 'ul' || child.nodeName.toLowerCase() === 'ol')
+    ) {
+      chunk = generatedChunk;
+    } else {
+      chunk = joinChunks(chunk, generatedChunk);
+    }
     const sibling = child.nextSibling;
     child = sibling;
   }
@@ -53,14 +83,12 @@ function genFragment(
 
 function getChunkForHTML(html: string): Object {
   const sanitizedHtml = html.trim().replace(REGEX_NBSP, SPACE);
-
   const safeBody = getSafeBodyFromHTML(sanitizedHtml);
   if (!safeBody) {
     return null;
   }
-
-  const { chunk } = genFragment(safeBody, new OrderedSet());
-
+  firstBlock = true;
+  const { chunk } = genFragment(safeBody, new OrderedSet(), -1, '');
   return { chunk };
 }
 
@@ -68,12 +96,9 @@ export default function htmlToDraft(html: string): Object {
   const chunkData = getChunkForHTML(html);
   if (chunkData) {
     const { chunk } = chunkData;
-
-    // console.log('chunk', chunk.inlines && chunk.inlines.toString())
     let start = 0;
     return {
       contentBlocks: chunk.text.split('\r')
-      .filter(textBlock => textBlock.length > 0)
       .map(
         (textBlock, ii) => {
           const end = start + textBlock.length;
@@ -88,8 +113,7 @@ export default function htmlToDraft(html: string): Object {
               return CharacterMetadata.create(data);
             }),
           );
-          start = end + 1;
-
+          start = end;
           return new ContentBlock({
             key: genKey(),
             type: chunk && chunk.blocks[ii].type,
@@ -101,6 +125,7 @@ export default function htmlToDraft(html: string): Object {
       ),
       entityMap: new Map({}),
     };
+    return null;
   }
   return null;
 }

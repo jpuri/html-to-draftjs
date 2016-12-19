@@ -49,17 +49,38 @@ const getEmptyChunk = (): Object => {
   };
 };
 
-const getBlockDividerChunk = (block: Object, depth: number): Object => {
+const getFirstBlockChunk = (blockType: string): Object => {
+  return {
+    text: '',
+    inlines: [],
+    entities: [],
+    blocks: [{
+      type: blockType,
+      depth: 0,
+    }],
+  };
+};
+
+const getBlockDividerChunk = (blockType: string, depth: number): Object => {
   return {
     text: '\r',
     inlines: [],
     entities: [],
     blocks: [{
-      type: block,
+      type: blockType,
       depth: Math.max(0, Math.min(MAX_DEPTH, depth)),
     }],
   };
 };
+
+const joinChunks = (A: Object, B: Object): Object => {
+  return {
+    text: A.text + B.text,
+    inlines: A.inlines.concat(B.inlines),
+    entities: A.entities.concat(B.entities),
+    blocks: A.blocks.concat(B.blocks),
+  };
+}
 
 module.exports = {
   createTextChunk,
@@ -67,4 +88,6 @@ module.exports = {
   getSoftNewlineChunk,
   getEmptyChunk,
   getBlockDividerChunk,
+  getFirstBlockChunk,
+  joinChunks,
 };

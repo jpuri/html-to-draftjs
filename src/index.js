@@ -17,6 +17,8 @@ class Playground extends Component {
     const rawContent = convertToRaw(inputEditorState.getCurrentContent());
     const html = draftToHtml(rawContent);
     const contentBlock = htmlToDraft(html);
+    console.log('1', htmlToDraft(html) && htmlToDraft(html).contentBlocks)
+    console.log('2', convertFromHTML(html) && convertFromHTML(html))
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
       const outputEditorState = EditorState.createWithContent(contentState);
