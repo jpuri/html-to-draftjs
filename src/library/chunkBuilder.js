@@ -49,7 +49,7 @@ const getEmptyChunk = (): Object => {
   };
 };
 
-const getFirstBlockChunk = (blockType: string): Object => {
+const getFirstBlockChunk = (blockType: string, data: Object): Object => {
   return {
     text: '',
     inlines: [],
@@ -57,11 +57,12 @@ const getFirstBlockChunk = (blockType: string): Object => {
     blocks: [{
       type: blockType,
       depth: 0,
+      data,
     }],
   };
 };
 
-const getBlockDividerChunk = (blockType: string, depth: number): Object => {
+const getBlockDividerChunk = (blockType: string, depth: number, data: Object): Object => {
   return {
     text: '\r',
     inlines: [],
@@ -69,6 +70,7 @@ const getBlockDividerChunk = (blockType: string, depth: number): Object => {
     blocks: [{
       type: blockType,
       depth: Math.max(0, Math.min(MAX_DEPTH, depth)),
+      data,
     }],
   };
 };

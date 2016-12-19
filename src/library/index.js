@@ -13,6 +13,7 @@ import {
 } from './chunkBuilder';
 import getBlockTypeForTag from './getBlockTypeForTag';
 import processInlineTag from './processInlineTag';
+import getBlockData from './getBlockData';
 
 const SPACE = ' ';
 const REGEX_NBSP = new RegExp('&nbsp;', 'g');
@@ -51,9 +52,16 @@ function genFragment(
          depth = -1;
        }
        if (!firstBlock) {
-         chunk = getBlockDividerChunk(blockType, depth);
+         chunk = getBlockDividerChunk(
+           blockType,
+           depth,
+           getBlockData(node)
+         );
        } else {
-         chunk = getFirstBlockChunk(blockType);
+         chunk = getFirstBlockChunk(
+           blockType,
+           getBlockData(node)
+         );
          firstBlock = false;
        }
     }
@@ -118,6 +126,7 @@ export default function htmlToDraft(html: string): Object {
             key: genKey(),
             type: chunk && chunk.blocks[ii].type,
             depth: chunk && chunk.blocks[ii].depth,
+            data: chunk && chunk.blocks[ii].data,
             text: textBlock,
             characterList,
           });
