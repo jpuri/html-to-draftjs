@@ -71,6 +71,18 @@ const getBlockDividerChunk = (blockType: string, depth: number, data: Object): O
   };
 };
 
+const getAtomicBlockChunk = (entityId: number): Object => {
+  return {
+    text: '\r ',
+    inlines: [new OrderedSet()],
+    entities: [entityId],
+    blocks: [{
+      type: 'atomic',
+      depth: 0,
+    }],
+  };
+};
+
 const joinChunks = (A: Object, B: Object): Object => {
   return {
     text: A.text + B.text,
@@ -87,5 +99,6 @@ module.exports = {
   getEmptyChunk,
   getBlockDividerChunk,
   getFirstBlockChunk,
+  getAtomicBlockChunk,
   joinChunks,
 };

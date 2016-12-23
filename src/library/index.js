@@ -1,7 +1,7 @@
 /* @flow */
 
-import { CharacterMetadata, ContentBlock, genKey } from 'draft-js';
-import { List, Map, OrderedSet } from 'immutable';
+import { CharacterMetadata, ContentBlock, genKey, Entity } from 'draft-js';
+import { List, OrderedMap, OrderedSet } from 'immutable';
 import getSafeBodyFromHTML from './getSafeBodyFromHTML';
 import {
   createTextChunk,
@@ -9,6 +9,7 @@ import {
   getEmptyChunk,
   getBlockDividerChunk,
   getFirstBlockChunk,
+  getAtomicBlockChunk,
   joinChunks,
 } from './chunkBuilder';
 import getBlockTypeForTag from './getBlockTypeForTag';
@@ -36,6 +37,39 @@ function genFragment(
 
   if (nodeName === 'br') {
     return { chunk: getSoftNewlineChunk() };
+  }
+
+  if (
+    nodeName === 'img' &&
+    node instanceof HTMLImageElement
+  ) {
+    const entityConfig = {};
+    entityConfig.src = node.src;
+    entityConfig.height = node.style.height;
+    entityConfig.width = node.style.width;
+    const entityId = Entity.create(
+      'IMAGE',
+      'MUTABLE',
+      entityConfig,
+    );
+    return { chunk: getAtomicBlockChunk(entityId) };
+  }
+
+  if (
+    nodeName === 'iframe' &&
+    node instanceof HTMLIFrameElement
+  ) {
+    const entityConfig = {};
+    entityConfig.src = node.src;
+    entityConfig.height = node.height;
+    entityConfig.width = node.width;
+    console.log('entityConfig', entityConfig)
+    const entityId = Entity.create(
+      'EMBEDDED_LINK',
+      'MUTABLE',
+      entityConfig,
+    );
+    return { chunk: getAtomicBlockChunk(entityId) };
   }
 
   const blockType = getBlockTypeForTag(nodeName, lastList);
@@ -107,6 +141,10 @@ export default function htmlToDraft(html: string): Object {
   const chunkData = getChunkForHTML(html);
   if (chunkData) {
     const { chunk } = chunkData;
+    let entityMap = new OrderedMap({});
+    // chunk.entities && chunk.entities.forEach(entity => {
+    //   entityMap = entityMap.set(entity, Entity.get(entity));
+    // });
     let start = 0;
     return {
       contentBlocks: chunk.text.split('\r')
@@ -135,7 +173,7 @@ export default function htmlToDraft(html: string): Object {
           });
         },
       ),
-      entityMap: new Map({}),
+      entityMap,
     };
     return null;
   }
