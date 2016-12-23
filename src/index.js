@@ -58,7 +58,22 @@ class Playground extends Component {
           />
         </div>
         <div style={{ height: 200 }}>
-          <Editor editorState={this.state.outputEditorState} />
+          <Editor
+            editorState={this.state.outputEditorState}
+            mention={{
+              separator: ' ',
+              trigger: '@',
+              suggestions: [
+                { text: 'A', value: 'a', url: 'href-a' },
+                { text: 'AB', value: 'ab', url: 'href-ab' },
+                { text: 'ABC', value: 'abc', url: 'href-abc' },
+                { text: 'ABCD', value: 'abcd', url: 'href-abcd' },
+                { text: 'ABCDE', value: 'abcde', url: 'href-abcde' },
+                { text: 'ABCDEF', value: 'abcdef', url: 'href-abcdef' },
+                { text: 'ABCDEFG', value: 'abcdefg', url: 'href-abcdefg' },
+              ],
+            }}
+          />
         </div>
       </div>
     );

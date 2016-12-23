@@ -34,7 +34,7 @@ const blockRenderMap = new Map({
     element: 'figure',
   },
   unstyled: {
-    element: 'div',
+    element: 'p',
   },
 });
 
