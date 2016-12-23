@@ -17,8 +17,8 @@ class Playground extends Component {
     const rawContent = convertToRaw(inputEditorState.getCurrentContent());
     const html = draftToHtml(rawContent);
     const contentBlock = htmlToDraft(html);
-    console.log('1', htmlToDraft(html) && htmlToDraft(html).contentBlocks)
-    console.log('2', convertFromHTML(html) && convertFromHTML(html))
+    // console.log('1', htmlToDraft(html) && htmlToDraft(html).contentBlocks)
+    // console.log('2', convertFromHTML(html) && convertFromHTML(html))
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
       const outputEditorState = EditorState.createWithContent(contentState);
@@ -33,7 +33,22 @@ class Playground extends Component {
     return (
       <div>
         <div style={{ height: 200 }}>
-          <Editor onEditorStateChange={this.onInputEditorChange} />
+          <Editor
+            onEditorStateChange={this.onInputEditorChange}
+            mention={{
+              separator: ' ',
+              trigger: '@',
+              suggestions: [
+                { text: 'A', value: 'a', url: 'href-a' },
+                { text: 'AB', value: 'ab', url: 'href-ab' },
+                { text: 'ABC', value: 'abc', url: 'href-abc' },
+                { text: 'ABCD', value: 'abcd', url: 'href-abcd' },
+                { text: 'ABCDE', value: 'abcde', url: 'href-abcde' },
+                { text: 'ABCDEF', value: 'abcdef', url: 'href-abcdef' },
+                { text: 'ABCDEFG', value: 'abcdefg', url: 'href-abcdefg' },
+              ],
+            }}
+          />
         </div>
         <div style={{ height: 200 }}>
           <textarea

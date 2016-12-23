@@ -14,6 +14,7 @@ import {
 import getBlockTypeForTag from './getBlockTypeForTag';
 import processInlineTag from './processInlineTag';
 import getBlockData from './getBlockData';
+import getEntityId from './getEntityId';
 
 const SPACE = ' ';
 const REGEX_NBSP = new RegExp('&nbsp;', 'g');
@@ -24,12 +25,13 @@ function genFragment(
   node: Object,
   inlineStyle: OrderedSet,
   depth: number,
-  lastList: string
+  lastList: string,
+  inEntity: number
 ): Object {
   const nodeName = node.nodeName.toLowerCase();
 
   if (nodeName === '#text' && node.textContent !== '\n') {
-    return createTextChunk(node, inlineStyle);
+    return createTextChunk(node, inlineStyle, inEntity);
   }
 
   if (nodeName === 'br') {
@@ -74,7 +76,8 @@ function genFragment(
 
   let child = node.firstChild;
   while (child) {
-    const { chunk: generatedChunk } = genFragment(child, inlineStyle, depth, lastList);
+    const entityId = getEntityId(child);
+    const { chunk: generatedChunk } = genFragment(child, inlineStyle, depth, lastList, (entityId || inEntity));
     if (nodeName.toLowerCase() === 'li' &&
       (child.nodeName.toLowerCase() === 'ul' || child.nodeName.toLowerCase() === 'ol')
     ) {
@@ -96,7 +99,7 @@ function getChunkForHTML(html: string): Object {
     return null;
   }
   firstBlock = true;
-  const { chunk } = genFragment(safeBody, new OrderedSet(), -1, '');
+  const { chunk } = genFragment(safeBody, new OrderedSet(), -1, '', undefined);
   return { chunk };
 }
 
