@@ -112,13 +112,7 @@ function genFragment(
   while (child) {
     const entityId = getEntityId(child);
     const { chunk: generatedChunk } = genFragment(child, inlineStyle, depth, lastList, (entityId || inEntity));
-    if (nodeName.toLowerCase() === 'li' &&
-      (child.nodeName.toLowerCase() === 'ul' || child.nodeName.toLowerCase() === 'ol')
-    ) {
-      chunk = generatedChunk;
-    } else {
-      chunk = joinChunks(chunk, generatedChunk);
-    }
+    chunk = joinChunks(chunk, generatedChunk);
     const sibling = child.nextSibling;
     child = sibling;
   }

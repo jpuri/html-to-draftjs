@@ -1,7 +1,7 @@
 {
   "name": "html-to-draftjs",
-  "version": "0.0.1",
-  "main": "build/html-to-draftjs.js",
+  "version": "0.0.1-beta",
+  "main": "dist/html-to-draftjs.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/jpuri/html-to-draftjs.git"
@@ -9,7 +9,6 @@
   "devDependencies": {
     "babel-preset-stage-0": "^6.16.0",
     "draft-js": "^0.9.1",
-    "precss": "^1.4.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-scripts": "0.8.3",
@@ -20,9 +19,7 @@
     "react-draft-wysiwyg": "file:../editor-oss"
   },
   "peerDependencies": {
-    "draft-js": "^0.9.x",
-    "react": "0.13.x || 0.14.x || 15.x",
-    "react-dom": "0.13.x || 0.14.x || 15.x"
+    "draft-js": "^0.9.x"
   },
   "scripts": {
     "start": "react-scripts start",
