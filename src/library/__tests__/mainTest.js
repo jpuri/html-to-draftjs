@@ -6,10 +6,7 @@ describe('htmlToDraft test suite', () => {
     let contentBlocks = htmlToDraft('');
     console.log('contentBlocks', contentBlocks);
 
-    contentBlocks = htmlToDraft('test');
-    console.log('contentBlocks', contentBlocks);
-
-    contentBlocks = htmlToDraft('<div>test</div>');
+    contentBlocks = htmlToDraft('<p>test</p>');
     console.log('contentBlocks', contentBlocks);
 
     contentBlocks = htmlToDraft('<h1>test</h1>');

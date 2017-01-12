@@ -1,6 +1,6 @@
 {
   "name": "html-to-draftjs",
-  "version": "0.0.1-beta",
+  "version": "0.1.0-beta2",
   "main": "dist/html-to-draftjs.js",
   "repository": {
     "type": "git",
@@ -9,9 +9,9 @@
   "devDependencies": {
     "babel-preset-stage-0": "^6.16.0",
     "draft-js": "^0.9.1",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "react-scripts": "0.8.3",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-scripts": "0.8.5",
     "rimraf": "^2.5.4",
     "webpack": "^1.14.0",
     "chai": "^3.5.0",
@@ -27,5 +27,7 @@
     "eject": "react-scripts eject",
     "clean": "rimraf dist",
     "build": "npm run clean && webpack --config config/webpack.build.js"
-  }
+  },
+  "author": "Jyoti Puri",
+  "license": "MIT"
 }

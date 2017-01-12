@@ -1,4 +1,6 @@
-#Authored Editor
+#HTML to DraftJS
+
+Build for use with editor library [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg)
 
 ## To setup
 - `yarn` or `npm install`
