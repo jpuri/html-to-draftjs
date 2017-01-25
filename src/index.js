@@ -7,13 +7,30 @@ import htmlToDraft from './library';
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './styles.css';
 
+// in constructor, I use your code above, but I change outputEditorState to inputEditorState
+// in the first Editor, I use this.state.inputEditorState as editorState
+
 class Playground extends Component {
 
-  state = {
-    outputEditorState: undefined,
+  // state = {
+  //   outputEditorState: undefined,
+  // }
+
+  constructor(props) {
+    super(props)
+    const html = '<p>123</p>'
+    const contentBlock = htmlToDraft(html);
+    if (contentBlock) {
+      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+      const inputEditorState = EditorState.createWithContent(contentState);
+      this.state = {
+        inputEditorState,
+      };
+    }
   }
 
   onInputEditorChange = (inputEditorState) => {
+    console.log('*****', inputEditorState.getCurrentContent())
     const rawContent = convertToRaw(inputEditorState.getCurrentContent());
     const html = draftToHtml(rawContent);
     const contentBlock = htmlToDraft(html);
@@ -32,10 +49,13 @@ class Playground extends Component {
   }
 
   render() {
+    // console.log('*****', this.state.inputEditorState.getCurrentContent())
+    // value={this.state.inputEditorState && draftToHtml(convertToRaw(this.state.inputEditorState.getCurrentContent()))}
     return (
       <div>
         <div style={{ height: 200 }}>
           <Editor
+            editorState={this.state.inputEditorState}
             onEditorStateChange={this.onInputEditorChange}
             mention={{
               separator: ' ',
@@ -56,26 +76,10 @@ class Playground extends Component {
           <textarea
             disabled
             className="demo-content"
-            value={this.state.inputEditorState && draftToHtml(convertToRaw(this.state.inputEditorState.getCurrentContent()))}
           />
         </div>
         <div style={{ height: 200 }}>
-          <Editor
-            editorState={this.state.outputEditorState}
-            mention={{
-              separator: ' ',
-              trigger: '@',
-              suggestions: [
-                { text: 'A', value: 'a', url: 'href-a' },
-                { text: 'AB', value: 'ab', url: 'href-ab' },
-                { text: 'ABC', value: 'abc', url: 'href-abc' },
-                { text: 'ABCD', value: 'abcd', url: 'href-abcd' },
-                { text: 'ABCDE', value: 'abcde', url: 'href-abcde' },
-                { text: 'ABCDEF', value: 'abcdef', url: 'href-abcdef' },
-                { text: 'ABCDEFG', value: 'abcdefg', url: 'href-abcdefg' },
-              ],
-            }}
-          />
+
         </div>
       </div>
     );

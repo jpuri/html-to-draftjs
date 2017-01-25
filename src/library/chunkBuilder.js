@@ -1,4 +1,4 @@
-import { OrderedSet } from 'immutable';
+import { OrderedSet, Map } from 'immutable';
 
 const SPACE = ' ';
 const MAX_DEPTH = 4;
@@ -46,7 +46,6 @@ const getEmptyChunk = (): Object => {
 };
 
 const getFirstBlockChunk = (blockType: string, data: Object): Object => {
-  console.log('data 1', data)
   return {
     text: '',
     inlines: [],
@@ -54,13 +53,12 @@ const getFirstBlockChunk = (blockType: string, data: Object): Object => {
     blocks: [{
       type: blockType,
       depth: 0,
-      data,
+      data: data || new Map({}),
     }],
   };
 };
 
 const getBlockDividerChunk = (blockType: string, depth: number, data: Object): Object => {
-  console.log('data 2', data)
   return {
     text: '\r',
     inlines: [],
@@ -68,7 +66,7 @@ const getBlockDividerChunk = (blockType: string, depth: number, data: Object): O
     blocks: [{
       type: blockType,
       depth: Math.max(0, Math.min(MAX_DEPTH, depth)),
-      data,
+      data: data || new Map({}),
     }],
   };
 };
@@ -81,6 +79,7 @@ const getAtomicBlockChunk = (entityId: number): Object => {
     blocks: [{
       type: 'atomic',
       depth: 0,
+      data: {}
     }],
   };
 };

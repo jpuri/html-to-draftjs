@@ -63,7 +63,6 @@ function genFragment(
     entityConfig.src = node.src;
     entityConfig.height = node.height;
     entityConfig.width = node.width;
-    console.log('entityConfig', entityConfig)
     const entityId = Entity.create(
       'EMBEDDED_LINK',
       'MUTABLE',
