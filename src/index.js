@@ -30,9 +30,11 @@ class Playground extends Component {
   }
 
   onInputEditorChange = (inputEditorState) => {
-    console.log('*****', inputEditorState.getCurrentContent())
+    console.log('into onInputEditorChange')
+    // console.log('*****', inputEditorState.getCurrentContent())
     const rawContent = convertToRaw(inputEditorState.getCurrentContent());
     const html = draftToHtml(rawContent);
+    console.log('html', html)
     const contentBlock = htmlToDraft(html);
 //    console.log('1', contentBlock)
     // console.log('2', convertFromHTML(html) && convertFromHTML(html))
@@ -43,8 +45,8 @@ class Playground extends Component {
         inputEditorState,
         outputEditorState,
       });
-      console.log('1', inputEditorState.getCurrentContent().getBlocksAsArray())
-      console.log('2', contentBlock.contentBlocks)
+      // console.log('1', inputEditorState.getCurrentContent().getBlocksAsArray())
+      // console.log('2', contentBlock.contentBlocks)
     }
   }
 
@@ -76,10 +78,13 @@ class Playground extends Component {
           <textarea
             disabled
             className="demo-content"
+            value={this.state.inputEditorState && draftToHtml(convertToRaw(this.state.inputEditorState.getCurrentContent()))}
           />
         </div>
         <div style={{ height: 200 }}>
-
+        <Editor
+          editorState={this.state.outputEditorState}
+        />
         </div>
       </div>
     );
