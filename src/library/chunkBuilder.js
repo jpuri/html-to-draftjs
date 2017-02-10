@@ -79,7 +79,7 @@ const getAtomicBlockChunk = (entityId: number): Object => {
     blocks: [{
       type: 'atomic',
       depth: 0,
-      data: {}
+      data: new Map({})
     }],
   };
 };
