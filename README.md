@@ -1,12 +1,19 @@
-#HTML to DraftJS
+# HTML To DraftJS
 
-Build for use with editor library [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg)
+A library for converting to plain HTML DraftJS Editor content.
+Build for use with editor library react-draft-wysiwyg
 
-## To setup
-- `yarn` or `npm install`
+## Installing
 
-## To start running playground
-- `npm start`
+```
+npm install html-to-draftjs --save
+```
 
-## To build
-- `num run build`
+## Using
+```
+import htmlToDraft from 'html-to-draftjs';
+
+const blocksFromHTML = htmlToDraft(this.props.content);
+const contentState = ContentState.createFromBlockArray(blocksFromHTML);
+const editorState = EditorState.createWithContent(contentState);
+```
