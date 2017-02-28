@@ -14,7 +14,8 @@ npm install html-to-draftjs --save
 import { EditorState, ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 
-const contentBlock = htmlToDraft(html);
-const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+const blocksFromHTML = htmlToDraft(this.props.content);
+const contentBlocks = blocksFromHtml.contentBlocks;
+const contentState = ContentState.createFromBlockArray(contentBlocks);
 const editorState = EditorState.createWithContent(contentState);
 ```
