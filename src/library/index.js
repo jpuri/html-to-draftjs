@@ -45,6 +45,7 @@ function genFragment(
   ) {
     const entityConfig = {};
     entityConfig.src = node.src;
+    entityConfig.alt = node.alt;
     entityConfig.height = node.style.height;
     entityConfig.width = node.style.width;
     const entityId = Entity.create(
