@@ -18,6 +18,8 @@ const getEntityId = (node) => {
     } else {
       entityConfig.url = node.href;
       entityConfig.title = node.innerHTML;
+      entityConfig.className = node.className;
+      entityConfig.target = node.target;
       entityId = Entity.create(
         'LINK',
         'MUTABLE',
