@@ -1,6 +1,6 @@
 {
   "name": "html-to-draftjs",
-  "version": "0.1.0-beta11",
+  "version": "0.1.0-beta12",
   "main": "dist/html-to-draftjs.js",
   "repository": {
     "type": "git",
