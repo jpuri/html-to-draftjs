@@ -48,7 +48,7 @@ function genFragment(
     entityConfig.alt = node.alt;
     entityConfig.height = node.style.height;
     entityConfig.width = node.style.width;
-    const entityId = Entity.create(
+    const entityId = Entity.__create(
       'IMAGE',
       'MUTABLE',
       entityConfig,
@@ -64,7 +64,7 @@ function genFragment(
     entityConfig.src = node.src;
     entityConfig.height = node.height;
     entityConfig.width = node.width;
-    const entityId = Entity.create(
+    const entityId = Entity.__create(
       'EMBEDDED_LINK',
       'MUTABLE',
       entityConfig,
@@ -137,7 +137,7 @@ export default function htmlToDraft(html: string): Object {
     let entityMap = new OrderedMap({});
     chunk.entities && chunk.entities.forEach(entity => {
       if (entity) {
-        entityMap = entityMap.set(entity, Entity.get(entity));
+        entityMap = entityMap.set(entity, Entity.__get(entity));
       }
     });
     let start = 0;

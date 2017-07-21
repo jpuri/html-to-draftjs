@@ -10,7 +10,7 @@ const getEntityId = (node) => {
       entityConfig.url = node.href;
       entityConfig.text = node.innerHTML;
       entityConfig.value = node.dataset.value;
-      entityId = Entity.create(
+      entityId = Entity.__create(
         'MENTION',
         'IMMUTABLE',
         entityConfig,
@@ -19,7 +19,7 @@ const getEntityId = (node) => {
       entityConfig.url = node.href;
       entityConfig.title = node.innerHTML;
       entityConfig.target = node.target;
-      entityId = Entity.create(
+      entityId = Entity.__create(
         'LINK',
         'MUTABLE',
         entityConfig,
