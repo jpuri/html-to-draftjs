@@ -41,7 +41,11 @@ const getEmptyChunk = (): Object => {
     text: '',
     inlines: [],
     entities: [],
-    blocks: [],
+    blocks: [{
+      type: 'unstyled',
+      depth: 0,
+      data: new Map({}),
+    }],
   };
 };
 
