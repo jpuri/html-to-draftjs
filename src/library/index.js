@@ -44,7 +44,7 @@ function genFragment(
     node instanceof HTMLImageElement
   ) {
     const entityConfig = {};
-    entityConfig.src = node.src;
+    entityConfig.src = node.getAttribute ? node.getAttribute('src') || node.src : node.src;
     entityConfig.alt = node.alt;
     entityConfig.height = node.style.height;
     entityConfig.width = node.style.width;
