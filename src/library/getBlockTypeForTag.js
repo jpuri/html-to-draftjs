@@ -35,6 +35,7 @@ const blockRenderMap = new Map({
   },
   unstyled: {
     element: 'p',
+    aliasedElements: ['div']
   },
 });
 
@@ -47,7 +48,8 @@ export default function getBlockTypeForTag(
       return (
       (draftBlock.element === tag &&
       (!draftBlock.wrapper || draftBlock.wrapper === lastList)) ||
-      draftBlock.wrapper === tag
+      draftBlock.wrapper === tag ||
+      (draftBlock.aliasedElements && draftBlock.aliasedElements.indexOf(tag) > -1)
     )})
     .keySeq()
     .toSet()
