@@ -116,7 +116,6 @@ function genFragment(
     const sibling = child.nextSibling;
     child = sibling;
   }
-
   return { chunk };
 }
 
@@ -136,9 +135,11 @@ export default function htmlToDraft(html: string): Object {
   if (chunkData) {
     const { chunk } = chunkData;
     let entityMap = new OrderedMap({});
-    // chunk.entities && chunk.entities.forEach(entity => {
-    //   entityMap = entityMap.set(entity, Entity.get(entity));
-    // });
+    chunk.entities && chunk.entities.forEach(entity => {
+      if (entity) {
+        entityMap = entityMap.set(entity, Entity.get(entity));
+      }
+    });
     let start = 0;
     return {
       contentBlocks: chunk.text.split('\r')
