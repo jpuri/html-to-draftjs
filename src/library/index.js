@@ -45,9 +45,13 @@ function genFragment(
   ) {
     const entityConfig = {};
     entityConfig.src = node.getAttribute ? node.getAttribute('src') || node.src : node.src;
+    entityConfig.alt = node.alt;
     entityConfig.height = node.style.height;
     entityConfig.width = node.style.width;
-    const entityId = Entity.create(
+    if (node.style.float) {
+      entityConfig.alignment = node.style.float;
+    }
+    const entityId = Entity.__create(
       'IMAGE',
       'MUTABLE',
       entityConfig,
@@ -63,7 +67,7 @@ function genFragment(
     entityConfig.src = node.src;
     entityConfig.height = node.height;
     entityConfig.width = node.width;
-    const entityId = Entity.create(
+    const entityId = Entity.__create(
       'EMBEDDED_LINK',
       'MUTABLE',
       entityConfig,
@@ -115,7 +119,6 @@ function genFragment(
     const sibling = child.nextSibling;
     child = sibling;
   }
-
   return { chunk };
 }
 
@@ -135,9 +138,11 @@ export default function htmlToDraft(html: string): Object {
   if (chunkData) {
     const { chunk } = chunkData;
     let entityMap = new OrderedMap({});
-    // chunk.entities && chunk.entities.forEach(entity => {
-    //   entityMap = entityMap.set(entity, Entity.get(entity));
-    // });
+    chunk.entities && chunk.entities.forEach(entity => {
+      if (entity) {
+        entityMap = entityMap.set(entity, Entity.__get(entity));
+      }
+    });
     let start = 0;
     return {
       contentBlocks: chunk.text.split('\r')

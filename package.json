@@ -1,6 +1,6 @@
 {
   "name": "html-to-draftjs",
-  "version": "0.1.0-beta7",
+  "version": "0.1.0-beta11",
   "main": "dist/html-to-draftjs.js",
   "repository": {
     "type": "git",
@@ -12,10 +12,10 @@
     "babel-preset-stage-0": "^6.22.0",
     "chai": "^3.5.0",
     "draft-js": "^0.10.0",
-    "draftjs-to-html": "^0.6.3",
+    "draftjs-to-html": "^0.7.3",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-draft-wysiwyg": "^1.7.6",
+    "react-draft-wysiwyg": "^1.10.7",
     "react-scripts": "0.9.5",
     "rimraf": "^2.6.1",
     "webpack": "^2.2.1"
