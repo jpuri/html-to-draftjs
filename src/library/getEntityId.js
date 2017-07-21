@@ -16,7 +16,7 @@ const getEntityId = (node) => {
         entityConfig,
       );
     } else {
-      entityConfig.url = node.href;
+      entityConfig.url = node.getAttribute('href') || node.href;
       entityConfig.title = node.innerHTML;
       entityConfig.target = node.target;
       entityId = Entity.__create(
