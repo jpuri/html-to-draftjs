@@ -7,18 +7,18 @@
     "url": "https://github.com/jpuri/html-to-draftjs.git"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.23.0",
-    "babel-preset-stage-0": "^6.22.0",
-    "chai": "^3.5.0",
-    "draft-js": "^0.10.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.1.0",
+    "draft-js": "^0.10.1",
     "draftjs-to-html": "^0.7.3",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "react-draft-wysiwyg": "^1.10.7",
-    "react-scripts": "0.9.5",
+    "react-scripts": "1.0.10",
     "rimraf": "^2.6.1",
-    "webpack": "^2.2.1"
+    "webpack": "^3.3.0"
   },
   "peerDependencies": {
     "draft-js": "^0.9.x || ^0.10.x"

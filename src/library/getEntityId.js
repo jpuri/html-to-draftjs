@@ -29,4 +29,4 @@ const getEntityId = (node) => {
   return entityId;
 }
 
-module.exports = getEntityId;
+export default getEntityId;

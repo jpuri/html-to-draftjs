@@ -3,7 +3,7 @@ import { OrderedSet, Map } from 'immutable';
 const SPACE = ' ';
 const MAX_DEPTH = 4;
 
-const getWhitespaceChunk = (entityId: ?string): Object => {
+export const getWhitespaceChunk = (entityId: ?string): Object => {
   return {
     text: SPACE,
     inlines: [new OrderedSet()],
@@ -12,7 +12,7 @@ const getWhitespaceChunk = (entityId: ?string): Object => {
   };
 };
 
-const createTextChunk = (node: Object, inlineStyle: OrderedSet, entityId: number): Object => {
+export const createTextChunk = (node: Object, inlineStyle: OrderedSet, entityId: number): Object => {
   const text = node.textContent;
   if (text.trim() === '') {
     return { chunk: getWhitespaceChunk(entityId) };
@@ -27,7 +27,7 @@ const createTextChunk = (node: Object, inlineStyle: OrderedSet, entityId: number
   };
 };
 
-const getSoftNewlineChunk = (): Object => {
+export const getSoftNewlineChunk = (): Object => {
   return {
     text: '\n',
     inlines: [new OrderedSet()],
@@ -36,7 +36,7 @@ const getSoftNewlineChunk = (): Object => {
   };
 };
 
-const getEmptyChunk = (): Object => {
+export const getEmptyChunk = (): Object => {
   return {
     text: '',
     inlines: [],
@@ -45,7 +45,7 @@ const getEmptyChunk = (): Object => {
   };
 };
 
-const getFirstBlockChunk = (blockType: string, data: Object): Object => {
+export const getFirstBlockChunk = (blockType: string, data: Object): Object => {
   return {
     text: '',
     inlines: [],
@@ -58,7 +58,7 @@ const getFirstBlockChunk = (blockType: string, data: Object): Object => {
   };
 };
 
-const getBlockDividerChunk = (blockType: string, depth: number, data: Object): Object => {
+export const getBlockDividerChunk = (blockType: string, depth: number, data: Object): Object => {
   return {
     text: '\r',
     inlines: [],
@@ -71,7 +71,7 @@ const getBlockDividerChunk = (blockType: string, depth: number, data: Object): O
   };
 };
 
-const getAtomicBlockChunk = (entityId: number): Object => {
+export const getAtomicBlockChunk = (entityId: number): Object => {
   return {
     text: '\r ',
     inlines: [new OrderedSet()],
@@ -84,7 +84,7 @@ const getAtomicBlockChunk = (entityId: number): Object => {
   };
 };
 
-const joinChunks = (A: Object, B: Object): Object => {
+export const joinChunks = (A: Object, B: Object): Object => {
   return {
     text: A.text + B.text,
     inlines: A.inlines.concat(B.inlines),
@@ -92,14 +92,3 @@ const joinChunks = (A: Object, B: Object): Object => {
     blocks: A.blocks.concat(B.blocks),
   };
 }
-
-module.exports = {
-  createTextChunk,
-  getWhitespaceChunk,
-  getSoftNewlineChunk,
-  getEmptyChunk,
-  getBlockDividerChunk,
-  getFirstBlockChunk,
-  getAtomicBlockChunk,
-  joinChunks,
-};

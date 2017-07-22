@@ -12,4 +12,4 @@ const getSafeBodyFromHTML = (html: string): ?Element => {
   return root;
 }
 
-module.exports = getSafeBodyFromHTML;
+export default getSafeBodyFromHTML;
