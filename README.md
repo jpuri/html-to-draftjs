@@ -1,7 +1,7 @@
 # HTML To DraftJS
 
-A library for converting to plain HTML DraftJS Editor content.
-Build for use with editor library **[react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg)**.
+A library for converting plain HTML to DraftJS Editor content.
+Build for use with **[react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg)**.
 
 ## Installation
 
