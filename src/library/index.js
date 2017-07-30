@@ -1,7 +1,7 @@
 /* @flow */
 
 import { CharacterMetadata, ContentBlock, genKey, Entity } from 'draft-js';
-import { List, OrderedMap, OrderedSet } from 'immutable';
+import { Map, List, OrderedMap, OrderedSet } from 'immutable';
 import getSafeBodyFromHTML from './getSafeBodyFromHTML';
 import {
   createTextChunk,
@@ -146,34 +146,33 @@ export default function htmlToDraft(html: string): Object {
     let start = 0;
     return {
       contentBlocks: chunk.text.split('\r')
-      .map(
-        (textBlock, ii) => {
-          const end = start + textBlock.length;
-          const inlines = chunk && chunk.inlines.slice(start, end);
-          const entities = chunk && chunk.entities.slice(start, end);
-          const characterList = new List(
-            inlines.map((style, index) => {
-              const data = { style, entity: null };
-              if (entities[index]) {
-                data.entity = entities[index];
-              }
-              return CharacterMetadata.create(data);
-            }),
-          );
-          start = end;
-          return new ContentBlock({
-            key: genKey(),
-            type: chunk && chunk.blocks[ii].type,
-            depth: chunk && chunk.blocks[ii].depth,
-            data: chunk && chunk.blocks[ii].data,
-            text: textBlock,
-            characterList,
-          });
-        },
-      ),
+        .map(
+          (textBlock, ii) => {
+            const end = start + textBlock.length;
+            const inlines = chunk && chunk.inlines.slice(start, end);
+            const entities = chunk && chunk.entities.slice(start, end);
+            const characterList = new List(
+              inlines.map((style, index) => {
+                const data = { style, entity: null };
+                if (entities[index]) {
+                  data.entity = entities[index];
+                }
+                return CharacterMetadata.create(data);
+              }),
+            );
+            start = end;
+            return new ContentBlock({
+              key: genKey(),
+              type: (chunk && chunk.blocks[ii] && chunk.blocks[ii].type) || 'unstyled',
+              depth: chunk && chunk.blocks[ii] && chunk.blocks[ii].depth,
+              data: (chunk && chunk.blocks[ii] && chunk.blocks[ii].data) || new Map({}),
+              text: textBlock,
+              characterList,
+            });
+          },
+        ),
       entityMap,
     };
-    return null;
   }
   return null;
 }

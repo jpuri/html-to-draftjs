@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw, ContentState, EditorState, convertFromHTML } from 'draft-js';
+import { convertToRaw, ContentState, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from './library';
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -18,7 +18,7 @@ class Playground extends Component {
 
   constructor(props) {
     super(props)
-    const html = '<p>123</p><p></p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvGBbRtzgNfNaHPP9X28Gj6OQF0l6ZaiqgxJlujX5QsE5g35Or18WijxY3" alt="undefined" style="float:none;height: auto;width: auto"/><p>456</p>'
+    const html = '';
     const contentBlock = htmlToDraft(html);
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks, contentBlock.entityMap);
