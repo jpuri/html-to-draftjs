@@ -30,6 +30,9 @@ const blockRenderMap = new Map({
   blockquote: {
     element: 'blockquote',
   },
+  code: {
+    element: 'pre',
+  },
   atomic: {
     element: 'figure',
   },
