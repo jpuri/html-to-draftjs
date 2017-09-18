@@ -21,6 +21,9 @@ describe('htmlToDraft test suite', () => {
     contentBlocks = htmlToDraft('<h1>test</h1><h6>test</h6>');
     console.log('contentBlocks', contentBlocks);
 
+    contentBlocks = htmlToDraft('<p>test<a>link</a></p>');
+    console.log('contentBlocks', contentBlocks);
+
     assert.equal(true, true);
   });
 });
