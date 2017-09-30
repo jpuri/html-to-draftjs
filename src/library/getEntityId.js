@@ -6,7 +6,7 @@ const getEntityId = (node) => {
     node instanceof HTMLAnchorElement
   ) {
     const entityConfig = {};
-    if (node.dataset.mention !== undefined) {
+    if (node.dataset && node.dataset.mention !== undefined) {
       entityConfig.url = node.href;
       entityConfig.text = node.innerHTML;
       entityConfig.value = node.dataset.value;
