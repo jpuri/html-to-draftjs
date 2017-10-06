@@ -24,7 +24,7 @@ export default function processInlineTag(
       const color = htmlElement.style.color;
       const backgroundColor = htmlElement.style.backgroundColor;
       const fontSize = htmlElement.style.fontSize;
-      const fontFamily = htmlElement.style.fontFamily;
+      const fontFamily = htmlElement.style.fontFamily.replace(/^"|"$/g, '');
       if (color) {
         style.add(`color-${color.replace(/ /g, '')}`);
       }
