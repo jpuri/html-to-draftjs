@@ -64,7 +64,7 @@ function genFragment(
     node instanceof HTMLIFrameElement
   ) {
     const entityConfig = {};
-    entityConfig.src = node.src;
+    entityConfig.src = node.getAttribute ? node.getAttribute('src') || node.src : node.src;
     entityConfig.height = node.height;
     entityConfig.width = node.width;
     const entityId = Entity.__create(
