@@ -25,6 +25,9 @@ export default function processInlineTag(
       const backgroundColor = htmlElement.style.backgroundColor;
       const fontSize = htmlElement.style.fontSize;
       const fontFamily = htmlElement.style.fontFamily.replace(/^"|"$/g, '');
+      const fontWeight = htmlElement.style.fontWeight;
+      const textDecoration = htmlElement.style.textDecoration;
+      const fontStyle = htmlElement.style.fontStyle;
       if (color) {
         style.add(`color-${color.replace(/ /g, '')}`);
       }
@@ -36,6 +39,15 @@ export default function processInlineTag(
       }
       if (fontFamily) {
         style.add(`fontfamily-${fontFamily}`);
+      }
+      if(fontWeight === 'bold'){
+        style.add(inlineTags.strong)
+      }
+      if(textDecoration === 'underline'){
+          style.add(inlineTags.ins)
+      }
+      if(fontStyle === 'italic'){
+          style.add(inlineTags.em)
       }
     }).toOrderedSet();
   }

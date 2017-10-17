@@ -24,6 +24,15 @@ describe('htmlToDraft test suite', () => {
     contentBlocks = htmlToDraft('<p>test<a>link</a></p>');
     console.log('contentBlocks', contentBlocks);
 
+    contentBlocks = htmlToDraft(`<span style="font-weight:bold;">bold</span>`);
+    console.log('contentBlocks', contentBlocks);
+
+    contentBlocks = htmlToDraft(`<span style="text-decoration:underline;">underline</span>`);
+    console.log('contentBlocks', contentBlocks);
+
+    contentBlocks = htmlToDraft(`<span style="font-style:italic;">italic</span>`);
+    console.log('contentBlocks', contentBlocks);
+
     assert.equal(true, true);
   });
 });
