@@ -91,4 +91,17 @@ export const joinChunks = (A: Object, B: Object): Object => {
     entities: A.entities.concat(B.entities),
     blocks: A.blocks.concat(B.blocks),
   };
-}
+};
+
+export const createCustomBlockChunk = (node: Object, inlineStyle: OrderedSet, entityId: number): Object => {
+  const text = node.outerHTML;
+  if (text.trim() === '') {
+    getWhitespaceChunk(entityId);
+  }
+  return {
+    text,
+    inlines: Array(text.length).fill(inlineStyle),
+    entities: Array(text.length).fill(entityId),
+    blocks: [],
+  };
+};
