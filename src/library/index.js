@@ -11,6 +11,7 @@ import {
   getFirstBlockChunk,
   getAtomicBlockChunk,
   joinChunks,
+  createCustomBlockChunk,
 } from './chunkBuilder';
 import getBlockTypeForTag from './getBlockTypeForTag';
 import processInlineTag from './processInlineTag';
@@ -21,6 +22,9 @@ const SPACE = ' ';
 const REGEX_NBSP = new RegExp('&nbsp;', 'g');
 
 let firstBlock = true;
+let _options = {
+  customTags: []
+};
 
 function genFragment(
   node: Object,
@@ -73,6 +77,17 @@ function genFragment(
       entityConfig,
     );
     return { chunk: getAtomicBlockChunk(entityId) };
+  }
+
+
+  if(_options && _options.customTags) {
+    for(const customTag of Object.values(_options.customTags)){
+      const {name, entity: {type, mutability, data}} = customTag;
+      if (nodeName === name) {
+        const entityId = Entity.__create(type, mutability, data);
+        return {chunk: createCustomBlockChunk(node, inlineStyle, entityId)};
+      }
+    }
   }
 
   const blockType = getBlockTypeForTag(nodeName, lastList);
@@ -133,7 +148,8 @@ function getChunkForHTML(html: string): Object {
   return { chunk };
 }
 
-export default function htmlToDraft(html: string): Object {
+export default function htmlToDraft(html: string, options?: Object): Object {
+  _options = options
   const chunkData = getChunkForHTML(html);
   if (chunkData) {
     const { chunk } = chunkData;
