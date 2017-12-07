@@ -1,6 +1,6 @@
 {
   "name": "html-to-draftjs",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/html-to-draftjs.js",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "webpack": "^3.9.1"
   },
   "peerDependencies": {
-    "draft-js": "^0.9.x || ^0.10.x"
+    "draft-js": "^0.10.x"
   },
   "scripts": {
     "start": "react-scripts start",
