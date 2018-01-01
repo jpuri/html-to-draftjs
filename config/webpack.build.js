@@ -10,7 +10,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, '../dist'),
     filename: 'html-to-draftjs.js',
-    libraryTarget: 'commonjs2',
+    library: 'htmlToDraftjs',
+    libraryTarget: 'umd',
   },
   externals: {
     'draft-js': 'draft-js',
