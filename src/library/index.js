@@ -27,7 +27,8 @@ function genFragment(
   inlineStyle: OrderedSet,
   depth: number,
   lastList: string,
-  inEntity: number
+  inEntity: number,
+  customNodeTransform: ?Function,
 ): Object {
   const nodeName = node.nodeName.toLowerCase();
 
@@ -113,8 +114,11 @@ function genFragment(
 
   let child = node.firstChild;
   while (child) {
-    const entityId = getEntityId(child);
-    const { chunk: generatedChunk } = genFragment(child, inlineStyle, depth, lastList, (entityId || inEntity));
+    let entityId = getEntityId(child);
+    if (typeof entityId === "undefined" && customNodeTransform) {
+        entityId = customNodeTransform(child)
+    }
+    const { chunk: generatedChunk } = genFragment(child, inlineStyle, depth, lastList, (entityId || inEntity), customNodeTransform);
     chunk = joinChunks(chunk, generatedChunk);
     const sibling = child.nextSibling;
     child = sibling;
@@ -122,19 +126,19 @@ function genFragment(
   return { chunk };
 }
 
-function getChunkForHTML(html: string): Object {
+function getChunkForHTML(html: string, customNodeTransform: ?Function): Object {
   const sanitizedHtml = html.trim().replace(REGEX_NBSP, SPACE);
   const safeBody = getSafeBodyFromHTML(sanitizedHtml);
   if (!safeBody) {
     return null;
   }
   firstBlock = true;
-  const { chunk } = genFragment(safeBody, new OrderedSet(), -1, '', undefined);
+  const { chunk } = genFragment(safeBody, new OrderedSet(), -1, '', undefined, customNodeTransform);
   return { chunk };
 }
 
-export default function htmlToDraft(html: string): Object {
-  const chunkData = getChunkForHTML(html);
+export default function htmlToDraft(html: string, customNodeTransform: ?Function): Object {
+  const chunkData = getChunkForHTML(html, customNodeTransform);
   if (chunkData) {
     const { chunk } = chunkData;
     let entityMap = new OrderedMap({});

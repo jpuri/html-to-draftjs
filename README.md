@@ -19,3 +19,14 @@ const { contentBlocks, entityMap } = blocksFromHtml.contentBlock;
 const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
 const editorState = EditorState.createWithContent(contentState);
 ```
+The function parameters are:
+
+1. **html**: HTML content string
+
+2. ***customNodeTransform***: Function to convert custom defined nodes by the user, it is also optional.
+    can be used for transformation of an html node to a custom entity. It takes 1 parameter:
+       1. `node` (HTML node)
+    It returns object with { type, mutalibity, data})
+
+## License
+MIT.
