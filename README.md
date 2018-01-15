@@ -15,7 +15,7 @@ import { EditorState, ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 
 const blocksFromHtml = htmlToDraft(this.props.content);
-const { contentBlocks, entityMap } = blocksFromHtml.contentBlock;
+const { contentBlocks, entityMap } = blocksFromHtml;
 const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
 const editorState = EditorState.createWithContent(contentState);
 ```
