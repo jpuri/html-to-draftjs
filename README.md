@@ -21,4 +21,4 @@ const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap)
 const editorState = EditorState.createWithContent(contentState);
 ```
 
-**Take Care:** Plz not use `html-to-draftjs@1.2.0` it has build issues.
+**Take Care:** Plz not use version `1.2.0` it has build issues.
