@@ -10,6 +10,7 @@ npm install html-to-draftjs --save
 ```
 
 ## Usage
+
 ```
 import { EditorState, ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
@@ -19,3 +20,5 @@ const { contentBlocks, entityMap } = blocksFromHtml;
 const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
 const editorState = EditorState.createWithContent(contentState);
 ```
+
+**Take Care:** Plz not use `html-to-draftjs@1.2.0` it has build issues.
