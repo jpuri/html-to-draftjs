@@ -30,7 +30,7 @@ function genFragment(
   depth: number,
   lastList: string,
   inEntity: number,
-  customChunkGenerator: CustomChunkGenerator,
+  customChunkGenerator: ?CustomChunkGenerator,
 ): Object {
   const nodeName = node.nodeName.toLowerCase();
 
@@ -39,7 +39,7 @@ function genFragment(
     if (value) {
       const entityId = Entity.__create(
         value.type,
-        value.mutable,
+        value.mutability,
         value.data || {},
       );
       return { chunk: getAtomicBlockChunk(entityId) };
@@ -137,7 +137,7 @@ function genFragment(
   return { chunk };
 }
 
-function getChunkForHTML(html: string, customChunkGenerator: CustomChunkGenerator): Object {
+function getChunkForHTML(html: string, customChunkGenerator: ?CustomChunkGenerator): Object {
   const sanitizedHtml = html.trim().replace(REGEX_NBSP, SPACE);
   const safeBody = getSafeBodyFromHTML(sanitizedHtml);
   if (!safeBody) {
@@ -148,7 +148,7 @@ function getChunkForHTML(html: string, customChunkGenerator: CustomChunkGenerato
   return { chunk };
 }
 
-export default function htmlToDraft(html: string, customChunkGenerator: CustomChunkGenerator): Object {
+export default function htmlToDraft(html: string, customChunkGenerator: ?CustomChunkGenerator): Object {
   const chunkData = getChunkForHTML(html, customChunkGenerator);
   if (chunkData) {
     const { chunk } = chunkData;

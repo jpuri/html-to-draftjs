@@ -24,6 +24,17 @@ describe('htmlToDraft test suite', () => {
     contentBlocks = htmlToDraft('<p>test<a>link</a></p>');
     console.log('contentBlocks', contentBlocks);
 
+    contentBlocks = htmlToDraft('<hr/>', function(nodeName) {
+      if (nodeName === 'hr') {
+        return {
+          type: 'HORIZONTAL_RULE',
+          mutability: 'IMMUTABLE',
+          data: {}
+        };
+      }
+    });
+    console.log('contentBlocks', contentBlocks);
+
     assert.equal(true, true);
   });
 });
