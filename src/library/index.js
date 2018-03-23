@@ -22,14 +22,29 @@ const REGEX_NBSP = new RegExp('&nbsp;', 'g');
 
 let firstBlock = true;
 
+type CustomChunkGenerator = (nodeName: string, node: HTMLElement) => ?{type: string, mutability: string, data: {}};
+
 function genFragment(
   node: Object,
   inlineStyle: OrderedSet,
   depth: number,
   lastList: string,
-  inEntity: number
+  inEntity: number,
+  customChunkGenerator: CustomChunkGenerator,
 ): Object {
   const nodeName = node.nodeName.toLowerCase();
+
+  if (customChunkGenerator) {
+    const value = customChunkGenerator(nodeName, node);
+    if (value) {
+      const entityId = Entity.__create(
+        value.type,
+        value.mutable,
+        value.data || {},
+      );
+      return { chunk: getAtomicBlockChunk(entityId) };
+    }
+  }
 
   if (nodeName === '#text' && node.textContent !== '\n') {
     return createTextChunk(node, inlineStyle, inEntity);
@@ -114,7 +129,7 @@ function genFragment(
   let child = node.firstChild;
   while (child) {
     const entityId = getEntityId(child);
-    const { chunk: generatedChunk } = genFragment(child, inlineStyle, depth, lastList, (entityId || inEntity));
+    const { chunk: generatedChunk } = genFragment(child, inlineStyle, depth, lastList, (entityId || inEntity), customChunkGenerator);
     chunk = joinChunks(chunk, generatedChunk);
     const sibling = child.nextSibling;
     child = sibling;
@@ -122,19 +137,19 @@ function genFragment(
   return { chunk };
 }
 
-function getChunkForHTML(html: string): Object {
+function getChunkForHTML(html: string, customChunkGenerator: CustomChunkGenerator): Object {
   const sanitizedHtml = html.trim().replace(REGEX_NBSP, SPACE);
   const safeBody = getSafeBodyFromHTML(sanitizedHtml);
   if (!safeBody) {
     return null;
   }
   firstBlock = true;
-  const { chunk } = genFragment(safeBody, new OrderedSet(), -1, '', undefined);
+  const { chunk } = genFragment(safeBody, new OrderedSet(), -1, '', undefined, customChunkGenerator);
   return { chunk };
 }
 
-export default function htmlToDraft(html: string): Object {
-  const chunkData = getChunkForHTML(html);
+export default function htmlToDraft(html: string, customChunkGenerator: CustomChunkGenerator): Object {
+  const chunkData = getChunkForHTML(html, customChunkGenerator);
   if (chunkData) {
     const { chunk } = chunkData;
     let entityMap = new OrderedMap({});
