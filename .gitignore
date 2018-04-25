@@ -13,3 +13,5 @@ npm-debug.log
 
 #IntelliJ
 .idea
+
+stats.json
