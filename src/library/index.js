@@ -75,6 +75,26 @@ function genFragment(
   }
 
   if (
+    nodeName === 'video' &&
+    node instanceof HTMLVideoElement
+  ) {
+    const entityConfig = {};
+    entityConfig.src = node.getAttribute ? node.getAttribute('src') || node.src : node.src;
+    entityConfig.alt = node.alt;
+    entityConfig.height = node.style.height;
+    entityConfig.width = node.style.width;
+    if (node.style.float) {
+      entityConfig.alignment = node.style.float;
+    }
+    const entityId = Entity.__create(
+      'VIDEO',
+      'MUTABLE',
+      entityConfig,
+    );
+    return { chunk: getAtomicBlockChunk(entityId) };
+  }
+
+  if (
     nodeName === 'iframe' &&
     node instanceof HTMLIFrameElement
   ) {
