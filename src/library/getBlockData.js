@@ -7,6 +7,10 @@ export default function getBlockData(
     return new Map({
       'text-align': node.style.textAlign,
     })
+  } else if (node.style.marginLeft) {
+    return new Map({
+      'margin-left': node.style.marginLeft,
+    })
   }
   return undefined;
 }
