@@ -1,6 +1,6 @@
 {
   "name": "html-to-draftjs",
-  "version": "1.0.1",
+  "version": "1.4.0",
   "main": "dist/html-to-draftjs.js",
   "repository": {
     "type": "git",
@@ -14,25 +14,25 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "chai": "^4.1.2",
-    "draft-js": "^0.10.3",
-    "draftjs-to-html": "^0.7.5",
-    "extract-text-webpack-plugin": "^3.0.1",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "draft-js": "^0.10.4",
+    "draftjs-to-html": "^0.7.6",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-draft-wysiwyg": "^1.10.12",
-    "react-scripts": "1.0.14",
+    "react-scripts": "1.0.17",
     "rimraf": "^2.6.2",
-    "webpack": "^3.8.1"
+    "webpack": "^3.9.1"
   },
   "peerDependencies": {
-    "draft-js": "^0.9.x || ^0.10.x"
+    "immutable": "3.x.x || 4.x.x",
+    "draft-js": "^0.10.x"
   },
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "clean": "rimraf dist",
-    "build": "npm run clean && webpack --config config/webpack.build.js"
+    "build": "npm run clean && webpack --config config/webpack.config.js"
   },
   "author": "Jyoti Puri",
   "license": "MIT"
