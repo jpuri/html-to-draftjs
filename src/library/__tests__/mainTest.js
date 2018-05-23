@@ -35,4 +35,22 @@ describe('htmlToDraft test suite', () => {
 
     assert.equal(true, true);
   });
+
+  it('should return ContentBlock with custom data when custom data getter setted and used.', () => {
+    const customDecoratorDataGetter = node => {
+      const customDecorator = node.getAttribute('data-custom-decorator')
+      if (customDecorator) {
+          return { customDecorator }
+      }
+      return {}
+    }
+
+    const { contentBlocks: [ decoratedParagraph ] } = htmlToDraft(
+      '<p data-custom-decorator="decoratedParagraph">block with custom decorator</p>',
+      null,
+      customDecoratorDataGetter
+    );
+
+    assert.equal(decoratedParagraph.getData().get('customDecorator'), 'decoratedParagraph');
+  });
 });
