@@ -15,7 +15,7 @@ npm install html-to-draftjs --save
 import { EditorState, ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 
-const blocksFromHtml = htmlToDraft(this.props.content);
+const blocksFromHtml = htmlToDraft(this.props.content[, customChunkRenderer][, customChunkDataGetter]);
 const { contentBlocks, entityMap } = blocksFromHtml;
 const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
 const editorState = EditorState.createWithContent(contentState);
@@ -44,5 +44,26 @@ htmlToDraft('<hr/>', (nodeName, node) => {
 })
 ```
 
+### (optional) customChunkRenderer: Object
+Use to define extra block data to parse from current node.
 
+* _node: HTMLElement_ - the parsed node itself
+
+This function is executed when parsing ContentBlock Data Map.
+The function should return an object.
+
+Example:
+```js
+htmlToDraft(
+  '<p data-custom-decorator="decoratedParagraph">block with custom decorator</p>',
+  null,
+  node => {
+    const customDecorator = node.getAttribute('data-custom-decorator')
+    if (customDecorator) {
+        return { customDecorator }
+    }
+    return {}
+  }
+);
+```
 **Take Care:** Plz not use version `1.2.0` it has build issues.
