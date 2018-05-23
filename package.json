@@ -16,6 +16,7 @@
     "chai": "^4.1.2",
     "draft-js": "^0.10.4",
     "draftjs-to-html": "^0.7.6",
+    "extract-text-webpack-plugin": "^3.0.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-draft-wysiwyg": "^1.10.12",
@@ -24,8 +25,8 @@
     "webpack": "^3.9.1"
   },
   "peerDependencies": {
-    "immutable": "3.x.x || 4.x.x",
-    "draft-js": "^0.10.x"
+    "draft-js": "^0.10.x",
+    "immutable": "3.x.x || 4.x.x"
   },
   "scripts": {
     "start": "react-scripts start",
