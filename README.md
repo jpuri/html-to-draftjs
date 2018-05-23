@@ -15,7 +15,7 @@ npm install html-to-draftjs --save
 import { EditorState, ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 
-const blocksFromHtml = htmlToDraft(this.props.content[, customChunkRenderer][, customChunkDataGetter]);
+const blocksFromHtml = htmlToDraft(this.props.content);
 const { contentBlocks, entityMap } = blocksFromHtml;
 const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
 const editorState = EditorState.createWithContent(contentState);
@@ -44,7 +44,7 @@ htmlToDraft('<hr/>', (nodeName, node) => {
 })
 ```
 
-### (optional) customChunkRenderer: Object
+### (optional) customChunkDataGetter: Object
 Use to define extra block data to parse from current node.
 
 * _node: HTMLElement_ - the parsed node itself
