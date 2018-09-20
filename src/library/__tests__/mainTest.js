@@ -35,4 +35,10 @@ describe('htmlToDraft test suite', () => {
 
     assert.equal(true, true);
   });
+
+    it('should return character styles even if span contains a single space', () => {
+        const html = '<p style="text-align:center;text-indent:0px;line-height:1.1;padding:0px 0px 0px 0px;font-size:27px;"><span style="color:rgba(77, 77, 77, 1.0);font-family:Lato;font-size:27px;font-style:normal;font-weight:bold;letter-spacing:1px;"><strong> </strong></span></p>';
+        const { contentBlocks: [contentBlock] } = htmlToDraft(html);
+        assert.equal(contentBlock.getCharacterList().first().getStyle().size, 4);
+    });
 });

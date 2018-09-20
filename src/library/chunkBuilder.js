@@ -3,10 +3,10 @@ import { OrderedSet, Map } from 'immutable';
 const SPACE = ' ';
 const MAX_DEPTH = 4;
 
-export const getWhitespaceChunk = (entityId: ?string): Object => {
+export const getWhitespaceChunk = (entityId: ?string, inlineStyle: OrderedSet): Object => {
   return {
     text: SPACE,
-    inlines: [new OrderedSet()],
+    inlines: [inlineStyle],
     entities: [entityId],
     blocks: [],
   };
@@ -15,7 +15,7 @@ export const getWhitespaceChunk = (entityId: ?string): Object => {
 export const createTextChunk = (node: Object, inlineStyle: OrderedSet, entityId: number): Object => {
   const text = node.textContent;
   if (text.trim() === '') {
-    return { chunk: getWhitespaceChunk(entityId) };
+    return { chunk: getWhitespaceChunk(entityId, inlineStyle) };
   }
   return {
     chunk: {
