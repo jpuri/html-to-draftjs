@@ -27,10 +27,10 @@ export const createTextChunk = (node: Object, inlineStyle: OrderedSet, entityId:
   };
 };
 
-export const getSoftNewlineChunk = (): Object => {
+export const getSoftNewlineChunk = (inlineStyle): Object => {
   return {
     text: '\n',
-    inlines: [new OrderedSet()],
+    inlines: [inlineStyle],
     entities: new Array(1),
     blocks: [],
   };

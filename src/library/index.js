@@ -51,7 +51,7 @@ function genFragment(
   }
 
   if (nodeName === 'br') {
-    return { chunk: getSoftNewlineChunk() };
+    return { chunk: getSoftNewlineChunk(inlineStyle) };
   }
 
   if (
