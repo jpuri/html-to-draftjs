@@ -15,3 +15,5 @@ npm-debug.log
 .idea
 
 stats.json
+dist/
+.vscode/*

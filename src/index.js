@@ -18,7 +18,7 @@ class Playground extends Component {
 
   constructor(props) {
     super(props)
-    const html = '';
+    const html = '<div>The <a href="https://github.com/jpuri/html-to-draftjs">repository</a> is on github</div>';
     const contentBlock = htmlToDraft(html);
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks, contentBlock.entityMap);

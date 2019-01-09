@@ -16,6 +16,7 @@ module.exports = {
   externals: {
     'draft-js': 'draft-js',
     immutable: 'immutable',
+    jsdom: 'jsdom'
   },
   plugins: [
     new webpack.DefinePlugin({
