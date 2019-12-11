@@ -11,7 +11,7 @@ npm install html-to-draftjs --save
 
 ## Usage
 
-```
+```js
 import { EditorState, ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 
@@ -32,7 +32,7 @@ Return nothing (or something falsy) to continue with the normal translation.
 
 Example:
 
-```
+```js
 htmlToDraft('<hr/>', (nodeName, node) => {
   if (nodeName === 'hr') {
     return {
@@ -43,6 +43,5 @@ htmlToDraft('<hr/>', (nodeName, node) => {
   }
 })
 ```
-
 
 **Take Care:** Plz not use version `1.2.0` it has build issues.
