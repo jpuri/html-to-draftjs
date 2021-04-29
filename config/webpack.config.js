@@ -9,7 +9,8 @@ module.exports = {
     path: path.join(__dirname, "../dist"),
     filename: "html-to-draftjs.js",
     library: "htmlToDraftjs",
-    libraryTarget: "umd"
+    libraryTarget: "umd",
+    globalObject: "this"
   },
   optimization: {
     minimizer: [new UglifyJsPlugin()]
