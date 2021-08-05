@@ -11,6 +11,10 @@ export default function getBlockData(
     return new Map({
       'margin-left': node.style.marginLeft,
     })
+  } else if (node.style.lineHeight) {
+    return new Map({
+      'line-height': node.style.lineHeight,
+    })
   }
   return undefined;
 }
