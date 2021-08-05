@@ -28,7 +28,6 @@ export default function processInlineTag(
       const fontWeight = htmlElement.style.fontWeight;
       const textDecoration = htmlElement.style.textDecoration;
       const fontStyle = htmlElement.style.fontStyle;
-      const lineHeight = htmlElement.style.lineHeight;
       if (color) {
         style.add(`color-${color.replace(/ /g, '')}`);
       }
@@ -49,9 +48,6 @@ export default function processInlineTag(
       }
       if(fontStyle === 'italic'){
           style.add(inlineTags.em)
-      }
-      if (lineHeight) {
-        style.add(`lineheight-${lineHeight.replace(/em$/g, '')}`);
       }
     }).toOrderedSet();
   }
