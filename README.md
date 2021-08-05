@@ -1,7 +1,10 @@
+## Fork info
+
+This repo has been forked for adding line height setting.
+
 # HTML To DraftJS
 
-A library for converting plain HTML to DraftJS Editor content.
-Build for use with **[react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg)**.
+A library for converting plain HTML to DraftJS Editor content. Build for use with **[react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg)**.
 
 ## Installation
 
@@ -22,13 +25,13 @@ const editorState = EditorState.createWithContent(contentState);
 ```
 
 ### (optional) customChunkRenderer
+
 Use to define additional html nodes. Only supports atomic blocks.
 
-* _nodeName: string_ - the name of the node, in lowercase
-* _node: HTMLElement_ - the parsed node itself
+- _nodeName: string_ - the name of the node, in lowercase
+- _node: HTMLElement_ - the parsed node itself
 
-This renderer function is executed before any other html to draft conversion.
-Return nothing (or something falsy) to continue with the normal translation.
+This renderer function is executed before any other html to draft conversion. Return nothing (or something falsy) to continue with the normal translation.
 
 Example:
 
@@ -43,6 +46,5 @@ htmlToDraft('<hr/>', (nodeName, node) => {
   }
 })
 ```
-
 
 **Take Care:** Plz not use version `1.2.0` it has build issues.
