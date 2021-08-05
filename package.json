@@ -1,10 +1,13 @@
 {
-  "name": "html-to-draftjs",
+  "name": "@olisti/html-to-draftjs",
   "version": "1.5.0",
   "main": "dist/html-to-draftjs.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jpuri/html-to-draftjs.git"
+    "url": "https://github.com/olisti/html-to-draftjs.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/olisti"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
