@@ -35,14 +35,24 @@ function genFragment(
   const nodeName = node.nodeName.toLowerCase();
 
   if (customChunkGenerator) {
-    const value = customChunkGenerator(nodeName, node);
-    if (value) {
+    const { entity, chunkType = CHUNK_TYPE.ATOMIC } = customChunkGenerator(nodeName, node) || {};
+
+    if (entity) {
       const entityId = Entity.__create(
-        value.type,
-        value.mutability,
-        value.data || {},
+        entity.type,
+        entity.mutability,
+        entity.data || {},
       );
-      return { chunk: getAtomicBlockChunk(entityId) };
+      let chunk;
+
+      switch (chunkType) {
+        case CHUNK_TYPE.TEXT: chunk = createTextChunk(node, inlineStyle, entityId).chunk; break;
+        case CHUNK_TYPE.ATOMIC: chunk = getAtomicBlockChunk(entityId); break;
+        case CHUNK_TYPE.SOFT_NEW_LINE: chunk = getSoftNewlineChunk(); break;
+        case CHUNK_TYPE.EMPTY: chunk = getEmptyChunk(); break;
+      }
+
+      return { chunk };
     }
   }
 
@@ -211,3 +221,10 @@ export default function htmlToDraft(html: string, customChunkGenerator: ?CustomC
   }
   return null;
 }
+
+export const CHUNK_TYPE = {
+  TEXT: 'TEXT',
+  ATOMIC: 'ATOMIC',
+  SOFT_NEW_LINE: 'SOFT_NEW_LINE',
+  EMPTY: 'EMPTY',
+};

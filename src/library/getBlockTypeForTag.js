@@ -38,7 +38,10 @@ const blockRenderMap = new Map({
   },
   unstyled: {
     element: 'p',
-    aliasedElements: ['div']
+    aliasedElements: [
+      'div',
+      'span',
+    ]
   },
 });
 

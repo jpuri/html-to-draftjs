@@ -35,10 +35,15 @@ Example:
 ```
 htmlToDraft('<hr/>', (nodeName, node) => {
   if (nodeName === 'hr') {
-    return {
+    const entity = {
       type: 'HORIZONTAL_RULE',
       mutability: 'MUTABLE',
       data: {}
+    };
+
+    return {
+      entity,
+      chunkType: 'ATOMIC',
     };
   }
 })
